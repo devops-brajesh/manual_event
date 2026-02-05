@@ -1,14 +1,25 @@
 name: First Workflow
 
-on: workflow_dispatch
+on: push
 jobs:
-  first-job:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Printing
-        run: echo "Hello world"
+      - uses: actions/checkout@v4
 
-      - name: Print goodbye
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
         run: |
-          echo "Done"
-          echo "-bye!"
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run pytest
+        run: |
+          echo "Running tests..."
+      - name: deploy to Docker Hub
+        run: |
+          echo "Deploying to Docker Hub..."
+          
